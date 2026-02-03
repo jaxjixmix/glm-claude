@@ -11,7 +11,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
     echo "(This will be saved securely to $CONFIG_FILE)"
     read -s TOKEN
     echo ""
-    echo "ANTHROPIC_AUTH_TOKEN=$TOKEN" > "$CONFIG_FILE"
+    echo "ANTHROPIC_API_KEY=$TOKEN" > "$CONFIG_FILE"
     chmod 600 "$CONFIG_FILE"
     echo "Token saved. You can change it by editing $CONFIG_FILE"
 fi
@@ -21,6 +21,7 @@ source "$CONFIG_FILE"
 
 # Set base environment
 export ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic"
+export ANTHROPIC_API_KEY="$ANTHROPIC_AUTH_TOKEN"
 
 # Parse arguments
 MODEL=""
