@@ -17,14 +17,37 @@ export ANTHROPIC_AUTH_TOKEN="$ANTHROPIC_AUTH_TOKEN"  # Also set the original var
 
 # Validate required environment variables
 if [ -z "$ANTHROPIC_API_KEY" ]; then
-    echo "Error: ANTHROPIC_API_KEY environment variable is not set."
+    echo "GLM API Token Setup"
+    echo "==================="
     echo ""
     echo "Get GLM Coding Plan: https://z.ai/subscribe?ic=YGTXTKNPPI"
     echo "Get your API key: https://z.ai/manage-apikey/apikey-list"
     echo ""
-    echo "Please create ~/.glmrc with:"
-    echo "ANTHROPIC_AUTH_TOKEN=your-api-key"
-    exit 1
+    echo "API Token not found. Let's set it up now."
+    echo ""
+
+    # Prompt for token
+    read -p "Enter your API key: " API_KEY
+
+    # Validate input
+    if [ -z "$API_KEY" ]; then
+        echo ""
+        echo "Error: No API key provided. Exiting."
+        exit 1
+    fi
+
+    # Create config file
+    echo "ANTHROPIC_AUTH_TOKEN=$API_KEY" > "$CONFIG_FILE"
+    chmod 600 "$CONFIG_FILE"
+
+    echo ""
+    echo "✓ API token saved to $CONFIG_FILE"
+    echo ""
+    echo "Running GLM..."
+
+    # Export for this session
+    export ANTHROPIC_AUTH_TOKEN="$API_KEY"
+    export ANTHROPIC_API_KEY="$API_KEY"
 fi
 
 # Parse arguments
