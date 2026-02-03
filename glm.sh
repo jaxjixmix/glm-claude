@@ -42,8 +42,6 @@ if [ -z "$ANTHROPIC_API_KEY" ]; then
 
     echo ""
     echo "✓ API token saved to $CONFIG_FILE"
-    echo ""
-    echo "Running GLM..."
 
     # Export for this session
     export ANTHROPIC_AUTH_TOKEN="$API_KEY"
