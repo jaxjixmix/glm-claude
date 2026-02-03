@@ -156,14 +156,5 @@ if [ "$YOLO_MODE" = true ]; then
     echo "WARNING: Running in YOLO mode - all safety checks disabled!"
 fi
 
-# Run Claude Code with debug output
-echo "DEBUG: API_KEY starts with: ${ANTHROPIC_API_KEY:0:20}..."
-echo "DEBUG: BASE_URL: $ANTHROPIC_BASE_URL"
-echo "DEBUG: Running command: $CLAUDE_CMD"
 echo "Running GLM..."
-
-# Show all ANTHROPIC_* environment variables for debugging
-echo "DEBUG ENV:"
-env | grep ANTHROPIC | sort
-
 exec $CLAUDE_CMD
