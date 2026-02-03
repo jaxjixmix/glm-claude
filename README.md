@@ -7,7 +7,7 @@ A command-line tool for launching Claude Code with Z.AI GLM models, featuring mo
 Install GLM globally with a single command:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/jaxjixmix/glm-claude/main/install.sh | bash
 ```
 
 ## Usage
