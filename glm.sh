@@ -3,14 +3,23 @@
 # GLM - Claude Code Launcher with Model Selection and YOLO Mode
 # Usage: glm [-m|--model MODEL] [-y|--yolo] [-h|--help] [--install]
 
+CONFIG_FILE="$HOME/.glmrc"
+
+# Check if config file exists and load token
+if [ -f "$CONFIG_FILE" ]; then
+    source "$CONFIG_FILE"
+fi
+
 # Set base environment
 export ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic"
+export ANTHROPIC_API_KEY="$ANTHROPIC_AUTH_TOKEN"  # Use the token from config
+export ANTHROPIC_AUTH_TOKEN="$ANTHROPIC_AUTH_TOKEN"  # Also set the original variable for status
 
-# Ensure API key is set
+# Validate required environment variables
 if [ -z "$ANTHROPIC_API_KEY" ]; then
     echo "Error: ANTHROPIC_API_KEY environment variable is not set."
-    echo "Please set it with: export ANTHROPIC_API_KEY='your-api-key'"
-    echo "You can get your API key from: https://console.anthropic.com/"
+    echo "Please create ~/.glmrc with:"
+    echo "ANTHROPIC_AUTH_TOKEN=your-api-key"
     exit 1
 fi
 
@@ -118,6 +127,14 @@ if [ "$YOLO_MODE" = true ]; then
     echo "WARNING: Running in YOLO mode - all safety checks disabled!"
 fi
 
-# Run Claude Code
+# Run Claude Code with debug output
+echo "DEBUG: API_KEY starts with: ${ANTHROPIC_API_KEY:0:20}..."
+echo "DEBUG: BASE_URL: $ANTHROPIC_BASE_URL"
+echo "DEBUG: Running command: $CLAUDE_CMD"
 echo "Running GLM..."
+
+# Show all ANTHROPIC_* environment variables for debugging
+echo "DEBUG ENV:"
+env | grep ANTHROPIC | sort
+
 exec $CLAUDE_CMD
