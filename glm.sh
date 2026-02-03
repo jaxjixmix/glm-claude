@@ -3,25 +3,16 @@
 # GLM - Claude Code Launcher with Model Selection and YOLO Mode
 # Usage: glm [-m|--model MODEL] [-y|--yolo] [-h|--help] [--install]
 
-CONFIG_FILE="$HOME/.glmrc"
-
-# First-time setup for API token
-if [ ! -f "$CONFIG_FILE" ]; then
-    echo "First time setup - please enter your Anthropic API token:"
-    echo "(This will be saved securely to $CONFIG_FILE)"
-    read -s TOKEN
-    echo ""
-    echo "ANTHROPIC_API_KEY=$TOKEN" > "$CONFIG_FILE"
-    chmod 600 "$CONFIG_FILE"
-    echo "Token saved. You can change it by editing $CONFIG_FILE"
-fi
-
-# Load token from config
-source "$CONFIG_FILE"
-
 # Set base environment
 export ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic"
-export ANTHROPIC_API_KEY="$ANTHROPIC_AUTH_TOKEN"
+
+# Ensure API key is set
+if [ -z "$ANTHROPIC_API_KEY" ]; then
+    echo "Error: ANTHROPIC_API_KEY environment variable is not set."
+    echo "Please set it with: export ANTHROPIC_API_KEY='your-api-key'"
+    echo "You can get your API key from: https://console.anthropic.com/"
+    exit 1
+fi
 
 # Parse arguments
 MODEL=""

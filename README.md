@@ -62,11 +62,17 @@ Examples:
 
 - **Token Security**: Your Anthropic API token is stored securely in `~/.glmrc` with restricted permissions (600).
 
-## Requirements
+## Setup
 
-- Claude Code installed and available in PATH
-- curl (for installation)
-- sudo access (for global installation)
+Before using GLM, you need to set your Anthropic API key:
+
+```bash
+export ANTHROPIC_API_KEY="your-api-key-here"
+```
+
+Get your API key from: https://console.anthropic.com/
+
+You can add this to your `~/.bashrc` or `~/.zshrc` for persistence.
 
 ## Uninstallation
 
