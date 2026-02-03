@@ -38,25 +38,39 @@ else
 fi
 
 # Determine install directory
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    INSTALL_DIR="/usr/local/bin"
-else
-    INSTALL_DIR="/usr/local/bin"
+# Use user directory to avoid requiring sudo/password
+USER_BIN_DIR="$HOME/.local/bin"
+
+# Create directory if it doesn't exist
+if [ ! -d "$USER_BIN_DIR" ]; then
+    echo "Creating $USER_BIN_DIR..."
+    mkdir -p "$USER_BIN_DIR"
 fi
 
-# Install to system
-echo "Installing to $INSTALL_DIR..."
-if ! sudo cp "$GLM_SOURCE" "$INSTALL_DIR/glm"; then
+# Install to user directory (no password required)
+echo "Installing to $USER_BIN_DIR..."
+if ! cp "$GLM_SOURCE" "$USER_BIN_DIR/glm"; then
     echo "Error: Failed to install GLM"
-    echo "You may need to run this script with sudo or enter your password when prompted"
     exit 1
 fi
 
 # Make sure it's executable
-sudo chmod +x "$INSTALL_DIR/glm"
+chmod +x "$USER_BIN_DIR/glm"
+
+# Check if ~/.local/bin is in PATH
+if [[ ":$PATH:" != *":$USER_BIN_DIR:"* ]]; then
+    echo ""
+    echo "⚠️  WARNING: $USER_BIN_DIR is not in your PATH"
+    echo ""
+    echo "Add the following to your shell profile (~/.bashrc, ~/.zshrc, etc.):"
+    echo ""
+    echo "  export PATH=\"\$HOME/.local/bin:\$PATH\""
+    echo ""
+    echo "Then restart your shell or run: source ~/.zshrc (or ~/.bashrc)"
+fi
 
 echo ""
-echo "GLM has been successfully installed!"
+echo "✓ GLM has been successfully installed to $USER_BIN_DIR/glm"
 echo ""
 echo "Usage:"
 echo "  glm -h              # Show help"
@@ -66,5 +80,7 @@ echo ""
 echo "Before using, set your API key:"
 echo "  export ANTHROPIC_API_KEY='your-api-key'"
 echo "  # Get it from: https://console.anthropic.com/"
+echo ""
+echo "To uninstall: rm $USER_BIN_DIR/glm"
 echo ""
 echo "Happy coding with GLM! 🚀"

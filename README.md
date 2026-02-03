@@ -4,11 +4,13 @@ A command-line tool for launching Claude Code with Z.AI GLM models, featuring mo
 
 ## Installation
 
-Install GLM globally with a single command:
+Install GLM globally with a single command (no password required):
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/jaxjixmix/glm-claude/main/install.sh | bash
 ```
+
+The installer installs to `~/.local/bin/`. If this directory isn't in your PATH, the installer will show you how to add it.
 
 ## Usage
 
@@ -86,7 +88,7 @@ GLM will automatically load your token from this file when you run it.
 ## Uninstallation
 
 ```bash
-sudo rm /usr/local/bin/glm
+rm ~/.local/bin/glm
 rm ~/.glmrc  # Optional: remove stored token
 ```
 
