@@ -32,6 +32,7 @@ MODEL=""
 YOLO_MODE=false
 SHOW_HELP=false
 SHOW_INSTALL=false
+SHOW_MODELS=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -49,6 +50,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --install)
             SHOW_INSTALL=true
+            shift
+            ;;
+        --models)
+            SHOW_MODELS=true
             shift
             ;;
         *)
@@ -80,6 +85,24 @@ if [ "$SHOW_INSTALL" = true ]; then
     exit 0
 fi
 
+# Show models if requested
+if [ "$SHOW_MODELS" = true ]; then
+    echo "Available GLM Models"
+    echo "===================="
+    echo ""
+    echo "glm-4.5    - Fast, efficient model for everyday tasks"
+    echo "glm-4.6    - Balanced model with improved capabilities"
+    echo "glm-4.7    - Most capable model for complex tasks"
+    echo ""
+    echo "Usage examples:"
+    echo "  glm -m glm-4.5"
+    echo "  glm --model glm-4.6"
+    echo "  glm -m glm-4.7 -y"
+    echo ""
+    echo "Default model: glm-4.7 (used when no model specified)"
+    exit 0
+fi
+
 # Show help if requested
 if [ "$SHOW_HELP" = true ]; then
     echo "GLM - Claude Code Launcher"
@@ -92,6 +115,7 @@ if [ "$SHOW_HELP" = true ]; then
     echo "  glm --yolo                    Same as -y"
     echo "  glm -h                        Show this help"
     echo "  glm --install                 Show installation instructions"
+    echo "  glm --models                  Show available models"
     echo ""
     echo "Valid models: glm-4.5, glm-4.6, glm-4.7"
     echo ""
@@ -103,8 +127,9 @@ if [ "$SHOW_HELP" = true ]; then
     echo "  glm"
     echo "  glm -m glm-4.5"
     echo "  glm -m glm-4.6 -y    # Use glm-4.6 with YOLO mode"
-    echo "  glm --yolo --model glm-4.7"
-    echo "  glm --install        # Show how to install globally"
+  echo "  glm --yolo --model glm-4.7"
+  echo "  glm --install        # Show how to install globally"
+  echo "  glm --models         # Show available models"
     exit 0
 fi
 
