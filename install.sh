@@ -25,7 +25,7 @@ if [ -f "./glm.sh" ]; then
     GLM_SOURCE="./glm.sh"
 else
     # Fallback to download (replace with actual URL when hosted)
-    GLM_URL="https://raw.githubusercontent.com/your-repo/glm/main/glm.sh"
+    GLM_URL="https://raw.githubusercontent.com/jaxjixmix/glm-claude/main/glm.sh"
     echo "Downloading GLM script..."
     TEMP_DIR=$(mktemp -d)
     trap "rm -rf $TEMP_DIR" EXIT
