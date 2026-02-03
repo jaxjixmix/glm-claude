@@ -29,6 +29,9 @@ glm -y
 
 # Combine model selection with YOLO mode
 glm -m glm-4.6 -y
+
+# Show available models with descriptions
+glm --models
 ```
 
 ## Features
@@ -49,11 +52,13 @@ Options:
   -y, --yolo          Enable YOLO mode (skips permissions - use with caution!)
   -h, --help          Show this help message
   --install           Show installation instructions
+  --models            Show available models with descriptions
 
 Examples:
   glm                          # Default usage
   glm -m glm-4.5              # Use glm-4.5 for Sonnet/Opus
   glm --model glm-4.6 -y      # Use glm-4.6 with YOLO mode
+  glm --models                # Show available models
 ```
 
 ## Security Notes
