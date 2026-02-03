@@ -64,15 +64,19 @@ Examples:
 
 ## Setup
 
-Before using GLM, you need to set your Anthropic API key:
+Before using GLM, you need to get your GLM API key:
+
+**Get GLM Coding Plan:** https://z.ai/subscribe?ic=YGTXTKNPPI  
+**Get your API key:** https://z.ai/manage-apikey/apikey-list
+
+Create a `~/.glmrc` file with your API key:
 
 ```bash
-export ANTHROPIC_API_KEY="your-api-key-here"
+echo "ANTHROPIC_AUTH_TOKEN=your-api-key-here" > ~/.glmrc
+chmod 600 ~/.glmrc
 ```
 
-Get your API key from: https://console.anthropic.com/
-
-You can add this to your `~/.bashrc` or `~/.zshrc` for persistence.
+GLM will automatically load your token from this file when you run it.
 
 ## Uninstallation
 
