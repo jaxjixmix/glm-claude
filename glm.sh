@@ -190,4 +190,10 @@ if [ "$YOLO_MODE" = true ]; then
 fi
 
 echo "Running GLM..."
-exec $CLAUDE_CMD
+
+# If prompt provided, pipe it and keep stdin open for interaction
+if [ -n "$PROMPT" ]; then
+    { echo "$PROMPT"; cat; } | $CLAUDE_CMD
+else
+    exec $CLAUDE_CMD
+fi
