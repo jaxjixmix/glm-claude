@@ -79,6 +79,11 @@ while [[ $# -gt 0 ]]; do
             shift
             ;;
         -p|--prompt)
+            if [ -z "$2" ]; then
+                echo "Error: -p/--prompt requires an argument"
+                echo "Use 'glm -h' for help"
+                exit 1
+            fi
             PROMPT="$2"
             shift 2
             ;;
