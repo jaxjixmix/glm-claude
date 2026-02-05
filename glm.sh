@@ -147,6 +147,8 @@ if [ "$SHOW_HELP" = true ]; then
     echo "  glm -h                        Show this help"
     echo "  glm --install                 Show installation instructions"
     echo "  glm --models                  Show available models"
+    echo "  glm -p PROMPT                 Start with an initial prompt"
+    echo "  glm --prompt PROMPT           Same as -p"
     echo ""
     echo "Valid models: glm-4.5, glm-4.6, glm-4.7"
     echo ""
