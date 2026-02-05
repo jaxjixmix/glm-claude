@@ -34,11 +34,18 @@ glm -m glm-4.6 -y
 
 # Show available models with descriptions
 glm --models
+
+# Start with an initial prompt
+glm -p "help me refactor this function"
+
+# Combine model selection with prompt
+glm -m glm-4.6 -p "add error handling"
 ```
 
 ## Features
 
 - **Model Selection**: Override default models with glm-4.5, glm-4.6, or glm-4.7
+- **Initial Prompts**: Start conversations with `-p` to immediately begin working on a task
 - **YOLO Mode**: Disable safety checks with `--dangerously-skip-permissions`
 - **Secure Token Storage**: API tokens saved securely in `~/.glmrc`
 - **Cross-Platform**: Works on macOS and Linux
@@ -51,6 +58,7 @@ Usage: glm [OPTIONS]
 
 Options:
   -m, --model MODEL    Set model for Sonnet and Opus (glm-4.5, glm-4.6, glm-4.7)
+  -p, --prompt PROMPT  Start with an initial prompt
   -y, --yolo          Enable YOLO mode (skips permissions - use with caution!)
   -h, --help          Show this help message
   --install           Show installation instructions
@@ -61,6 +69,9 @@ Examples:
   glm -m glm-4.5              # Use glm-4.5 for Sonnet/Opus
   glm --model glm-4.6 -y      # Use glm-4.6 with YOLO mode
   glm --models                # Show available models
+  glm -p "review my code"              # Start with initial prompt
+  glm -m glm-4.5 -p "add tests"        # Combine with model selection
+  glm --prompt "fix bug" -y            # Combine with YOLO mode
 ```
 
 ## Security Notes
