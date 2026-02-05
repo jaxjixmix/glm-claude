@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -o pipefail
 # GLM - Claude Code Launcher with Model Selection and YOLO Mode
 # Usage: glm [-m|--model MODEL] [-y|--yolo] [-h|--help] [--install]
 
@@ -54,6 +55,7 @@ YOLO_MODE=false
 SHOW_HELP=false
 SHOW_INSTALL=false
 SHOW_MODELS=false
+PROMPT=""
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -76,6 +78,15 @@ while [[ $# -gt 0 ]]; do
         --models)
             SHOW_MODELS=true
             shift
+            ;;
+        -p|--prompt)
+            if [ -z "$2" ]; then
+                echo "Error: -p/--prompt requires an argument"
+                echo "Use 'glm -h' for help"
+                exit 1
+            fi
+            PROMPT="$2"
+            shift 2
             ;;
         *)
             echo "Unknown option: $1"
@@ -137,6 +148,8 @@ if [ "$SHOW_HELP" = true ]; then
     echo "  glm -h                        Show this help"
     echo "  glm --install                 Show installation instructions"
     echo "  glm --models                  Show available models"
+    echo "  glm -p PROMPT                 Start with an initial prompt"
+    echo "  glm --prompt PROMPT           Same as -p"
     echo ""
     echo "Valid models: glm-4.5, glm-4.6, glm-4.7"
     echo ""
@@ -178,4 +191,10 @@ if [ "$YOLO_MODE" = true ]; then
 fi
 
 echo "Running GLM..."
-exec $CLAUDE_CMD
+
+# If prompt provided, pipe it and keep stdin open for interaction
+if [ -n "$PROMPT" ]; then
+    { echo "$PROMPT"; cat; } | $CLAUDE_CMD
+else
+    exec $CLAUDE_CMD
+fi
