@@ -78,6 +78,10 @@ while [[ $# -gt 0 ]]; do
             SHOW_MODELS=true
             shift
             ;;
+        -p|--prompt)
+            PROMPT="$2"
+            shift 2
+            ;;
         *)
             echo "Unknown option: $1"
             echo "Use 'glm -h' for help"
