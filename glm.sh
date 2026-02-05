@@ -54,6 +54,7 @@ YOLO_MODE=false
 SHOW_HELP=false
 SHOW_INSTALL=false
 SHOW_MODELS=false
+PROMPT=""
 
 while [[ $# -gt 0 ]]; do
     case $1 in
