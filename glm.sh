@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -o pipefail
 # GLM - Claude Code Launcher with Model Selection and YOLO Mode
 # Usage: glm [-m|--model MODEL] [-y|--yolo] [-h|--help] [--install]
 
