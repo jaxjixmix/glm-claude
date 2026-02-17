@@ -8,8 +8,8 @@ CONFIG_FILE="$HOME/.glmrc"
 [ -f "$CONFIG_FILE" ] && source "$CONFIG_FILE"
 
 # Set base GLM endpoint
-export ANTHROPIC_BASE_URL="https://api.zai/api/anthropic"
-export ANTHROPIC_API_KEY="${ANTHROPIC_AUTH_TOKEN:-}"
+export ANTHROPIC_BASE_URL="https://api.z.ai/api/anthropic"
+export ANTHROPIC_AUTH_TOKEN="${ANTHROPIC_AUTH_TOKEN:-}"
 
 # Run claude with remaining args
 exec claude "$@"
