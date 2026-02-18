@@ -10,7 +10,7 @@ Install GLM globally with a single command (no password required):
 curl -fsSL https://raw.githubusercontent.com/jaxjixmix/glm-claude/main/install.sh | bash
 ```
 
-The installer installs to `~/.local/bin/`. If this directory isn't in your PATH, the installer will show you how to add it.
+The installer installs both `glm` and `glm-docker` to `~/.local/bin/`. If this directory isn't in your PATH, the installer will show you how to add it.
 
 ## Usage
 
@@ -51,18 +51,28 @@ GLM will automatically load your token from this file when you run it.
 
 ## Docker Support
 
-To use GLM with Docker:
+**Quick Start with Docker:**
 
 ```bash
-# Create Dockerfile and docker-compose.glm.yml in your project directory
+# 1. Install GLM (includes glm-docker command)
+curl -fsSL https://raw.githubusercontent.com/jaxjixmix/glm-claude/main/install.sh | bash
+
+# 2. Go to your project directory
+cd /path/to/your/project
+
+# 3. Create Docker files
 glm-docker
 
-# Build the Docker image (only needed once per project)
+# 4. Build the Docker image (only needed once per project)
 ./glm-docker-env.sh build
 
-# Run Claude Code interactively in Docker
+# 5. Run Claude Code in Docker
 ./glm-docker-env.sh run --rm claude-glm claude
+```
 
+**Advanced Usage:**
+
+```bash
 # Run with auto-confirmation (bypasses permission prompts)
 ./glm-docker-env.sh run --rm claude-glm ./glm.sh -y "your prompt"
 
