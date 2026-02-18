@@ -37,6 +37,25 @@ else
     GLM_SOURCE="$TEMP_DIR/glm.sh"
 fi
 
+# Similarly for glm-docker
+if [ -f "./glm-docker.sh" ]; then
+    echo "Using local glm-docker.sh..."
+    GLM_DOCKER_SOURCE="./glm-docker.sh"
+else
+    GLM_DOCKER_URL="https://raw.githubusercontent.com/jaxjixmix/glm-claude/main/glm-docker.sh"
+    echo "Downloading GLM Docker script..."
+    if [ -z "${TEMP_DIR:-}" ]; then
+        TEMP_DIR=$(mktemp -d)
+        trap "rm -rf $TEMP_DIR" EXIT
+    fi
+    if ! curl -fsSL "$GLM_DOCKER_URL" -o "$TEMP_DIR/glm-docker.sh"; then
+        echo "Warning: Failed to download GLM Docker script"
+        GLM_DOCKER_SOURCE=""
+    else
+        GLM_DOCKER_SOURCE="$TEMP_DIR/glm-docker.sh"
+    fi
+fi
+
 # Determine install directory
 # Use user directory to avoid requiring sudo/password
 USER_BIN_DIR="$HOME/.local/bin"
@@ -56,6 +75,17 @@ fi
 
 # Make sure it's executable
 chmod +x "$USER_BIN_DIR/glm"
+
+# Install glm-docker if source is available
+if [ -n "${GLM_DOCKER_SOURCE:-}" ]; then
+    echo "Installing glm-docker to $USER_BIN_DIR..."
+    if ! cp "$GLM_DOCKER_SOURCE" "$USER_BIN_DIR/glm-docker"; then
+        echo "Warning: Failed to install glm-docker"
+    else
+        chmod +x "$USER_BIN_DIR/glm-docker"
+        echo "✓ glm-docker installed"
+    fi
+fi
 
 # Check if ~/.local/bin is in PATH
 if [[ ":$PATH:" != *":$USER_BIN_DIR:"* ]]; then
@@ -77,10 +107,13 @@ echo "  glm -h              # Show help"
 echo "  glm                 # Run with default settings"
 echo "  glm -m glm-4.5      # Use specific model"
 echo ""
+echo "Docker:"
+echo "  glm-docker          # Create docker-compose.yml in current directory"
+echo ""
 echo "Before using, set your API key:"
 echo "  export ANTHROPIC_API_KEY='your-api-key'"
 echo "  # Get it from: https://console.anthropic.com/"
 echo ""
-echo "To uninstall: rm $USER_BIN_DIR/glm"
+echo "To uninstall: rm $USER_BIN_DIR/glm $USER_BIN_DIR/glm-docker"
 echo ""
 echo "Happy coding with GLM! 🚀"

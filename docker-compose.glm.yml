@@ -1,0 +1,12 @@
+services:
+  claude-glm:
+    build: .
+    container_name: claude-glm
+    environment:
+      - ANTHROPIC_BASE_URL=https://api.z.ai/api/anthropic
+      - ANTHROPIC_AUTH_TOKEN=${ANTHROPIC_AUTH_TOKEN:-}
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    stdin_open: true
+    tty: true

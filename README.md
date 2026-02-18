@@ -21,6 +21,9 @@ glm
 # Pass any claude CLI arguments
 glm --help
 glm -c "your prompt"
+
+# Create docker-compose.yml in current directory
+glm-docker
 ```
 
 ## Features
@@ -28,6 +31,7 @@ glm -c "your prompt"
 - **Simple Wrapper**: Sets GLM API endpoint and passes all arguments to Claude Code
 - **Secure Token Storage**: API tokens saved securely in `~/.glmrc`
 - **Cross-Platform**: Works on macOS and Linux
+- **Docker Support**: Generate docker-compose.yml for containerized usage
 
 ## Setup
 
@@ -45,10 +49,51 @@ chmod 600 ~/.glmrc
 
 GLM will automatically load your token from this file when you run it.
 
+## Docker Support
+
+To use GLM with Docker:
+
+```bash
+# Create Dockerfile and docker-compose.glm.yml in your project directory
+glm-docker
+
+# Build the Docker image (only needed once per project)
+./glm-docker-env.sh build
+
+# Run Claude Code interactively in Docker
+./glm-docker-env.sh run --rm claude-glm claude
+
+# Run with auto-confirmation (bypasses permission prompts)
+./glm-docker-env.sh run --rm claude-glm ./glm.sh -y "your prompt"
+
+# Or use docker compose directly (if ANTHROPIC_AUTH_TOKEN is set)
+docker compose -f docker-compose.glm.yml run --rm claude-glm claude
+```
+
+The Docker setup:
+- Creates `docker-compose.glm.yml` (won't conflict with your existing docker-compose files)
+- Creates `glm-docker-env.sh` helper script that automatically sources `~/.glmrc`
+- Installs the official `@anthropic-ai/claude-code` npm package
+- Pre-configures the GLM API endpoint
+- Mounts your current directory to `/workspace` in the container
+- Runs as non-root user (required for `--dangerously-skip-permissions`)
+- Your API token from `~/.glmrc` is automatically used
+
+**Available flags:**
+- `-y` or `--yes` - Skip permission prompts (useful for automated scripts)
+- All standard Claude Code CLI flags are supported
+
+**Optional alias** - Add to your `~/.zshrc` or `~/.bashrc`:
+```bash
+alias glm-docker-up='docker compose -f docker-compose.glm.yml'
+# Then use: glm-docker-up run --rm claude-glm claude
+```
+
 ## Uninstallation
 
 ```bash
 rm ~/.local/bin/glm
+rm ~/.local/bin/glm-docker
 rm ~/.glmrc  # Optional: remove stored token
 ```
 
